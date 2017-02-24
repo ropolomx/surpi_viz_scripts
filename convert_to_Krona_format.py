@@ -25,5 +25,5 @@ surpi_krona_group = counttable.groupby('Sample')
 header = ['Counts','Family','Genus','Species']
 
 for name, group in surpi_krona_group:
-        group.to_csv(str(name + ".txt"), columns=header, header=False, index=False)
+        group.to_csv(str(name + ".txt"), sep='\t', columns=header, header=False, index=False)
 
