@@ -19,7 +19,7 @@ def melt_counttable(surpi_output):
 #cols = cols[-3:] + cols [:-3]
 #surpi_sorted = surpi_sorted[cols]
 
-surpi_krona_group = surpi_krona.groupby('Sample')
+surpi_krona_group = counttable.groupby('Sample')
 
 for name, group in surpi_krona_group:
         group.to_csv(str(name + ".txt"), columns=header, header=False, index=False)
