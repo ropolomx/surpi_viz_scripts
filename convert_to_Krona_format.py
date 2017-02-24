@@ -13,8 +13,7 @@ def arguments():
 def melt_counttable(surpi_output):
 
     counttable = pd.read_table(surpi_output)
-    # counttable.columns
-    counttable = pd.melt(counttable, id_vars = ['Species', 'Genus', 'Family'], var_name='Barcode', value_name='Counts')
+    counttable = pd.melt(counttable, id_vars = ['Species', 'Genus', 'Family'], var_name='Sample', value_name='Counts')
 
 #cols = cols[-3:] + cols [:-3]
 #surpi_sorted = surpi_sorted[cols]
