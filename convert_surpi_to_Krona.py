@@ -23,15 +23,29 @@ def melt_counttable(surpi_output):
 #cols = cols[-1] + cols [:-3]
 #surpi_sorted = surpi_sorted[cols]
 
-def group_by_Sample():
+def group_by_Sample(counttable):
     surpi_krona_group = counttable.groupby('Sample')
 
-def save_to_file():
-    
-    # Variable with the desired order of columns to export for
-    # Krona visualizations
-header = ['Counts','Family','Genus','Species']
+    return surpi_krona_group
 
-for name, group in surpi_krona_group:
+def save_to_file(counttable):
+
+    """ Variable with the desired order of columns to export for    Krona visualizations
+    """
+    header = ['Counts','Family','Genus','Species']
+
+    for name, group in group_by_Sample(counttable):
         group.to_csv(str(name + ".txt"), sep='\t', columns=header, header=False, index=False)
 
+def main():
+
+    args = arguments()
+
+    melting = melt_counttable(args.surpi_output)
+
+    grouping = group_by_Sample(melting)
+
+    save_to_file(grouping)
+
+if __name__ == '__main__':
+    main()
