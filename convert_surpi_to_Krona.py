@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 import pandas as pd
+import argparse
 
 def arguments():
 
     parser = argparse.ArgumentParser()
-
-    parser.add_argument('surpi-output', help='Count table file that is the output of SURPI analysis. Tab-delimited file')
+    parser.add_argument('surpi', help='Count table file that is the output of SURPI analysis. Tab-delimited file')
 
     return parser.parse_args()
 
@@ -20,32 +20,30 @@ def melt_counttable(surpi_output):
 
     return counttable
 
-#cols = cols[-1] + cols [:-3]
-#surpi_sorted = surpi_sorted[cols]
+def group_by_Sample(melted):
 
-def group_by_Sample(counttable):
-    surpi_krona_group = counttable.groupby('Sample')
+    surpi_krona_group = melted.groupby('Sample')
 
     return surpi_krona_group
 
-def save_to_file(counttable):
+def save_to_file(melted):
 
     """ Variable with the desired order of columns to export for    Krona visualizations
     """
     header = ['Counts','Family','Genus','Species']
 
-    for name, group in group_by_Sample(counttable):
-        group.to_csv(str(name + ".txt"), sep='\t', columns=header, header=False, index=False)
+    for name, group in group_by_Sample(melted):
+        group.to_csv(str(name+".txt"), sep='\t', columns=header, header=False, index=False)
 
 def main():
 
     args = arguments()
 
-    melting = melt_counttable(args.surpi_output)
+    melting = melt_counttable(args.surpi)
 
     grouping = group_by_Sample(melting)
 
-    save_to_file(grouping)
+    save_to_file(melting)
 
 if __name__ == '__main__':
     main()
