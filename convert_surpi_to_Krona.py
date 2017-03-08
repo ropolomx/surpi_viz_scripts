@@ -16,6 +16,9 @@ def melt_counttable(surpi_output):
     """
 
     counttable = pd.read_table(surpi_output)
+
+    counttable = counttable.rename(columns={'Family(@=contigbarcode)': 'Family'})
+
     counttable = pd.melt(counttable, id_vars = ['Species', 'Genus', 'Family'], var_name='Sample', value_name='Counts')
 
     return counttable
@@ -28,7 +31,7 @@ def group_by_Sample(melted):
 
 def save_to_file(melted):
 
-    """ Variable with the desired order of columns to export for    Krona visualizations
+    """ Save table to tab-delimite file. Header variable a list with the desired order of columns to export Krona visualizations
     """
     header = ['Counts','Family','Genus','Species']
 
