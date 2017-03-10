@@ -1,14 +1,21 @@
 #!/usr/bin/env python3
 
 import pandas as pd
+import os
 import argparse
 
 def arguments():
 
     parser = argparse.ArgumentParser()
+    parser.add_argument('--tax-level', default='species', help='Taxonomical level of SURPI results')
     parser.add_argument('surpi', help='Count table file that is the output of SURPI analysis. Tab-delimited file')
 
     return parser.parse_args()
+
+def counttables(counttable):
+
+    return os.path.splitext(os.path.basename(counttable))[0]
+
 
 def melt_counttable(surpi_output):
 
